@@ -28,6 +28,10 @@ func init() {
 	for i := 0; i < P-1; i++ {
 		tausworthe.num[i] = true
 	}
+
+	for i := 0; i < i<<22; i++ {
+		tausworthe.next()
+	}
 }
 
 func Seed(seed int) {
@@ -40,6 +44,14 @@ func Bool() bool {
 
 func Uint64() uint64 {
 	return tausworthe.Uint64()
+}
+
+func Uint32() uint32 {
+	return tausworthe.Uint32()
+}
+
+func Uint16() uint16 {
+	return tausworthe.Uint16()
 }
 
 func Uint8() uint8 {
@@ -62,6 +74,28 @@ func (t *Tausworthe) Uint64() uint64 {
 	t.next()
 	var result uint64
 	for i := 0; i < 64; i++ {
+		if t.num[(t.index+uint(i))%P] {
+			result |= 1 << i
+		}
+	}
+	return result
+}
+
+func (t *Tausworthe) Uint32() uint32 {
+	t.next()
+	var result uint32
+	for i := 0; i < 32; i++ {
+		if t.num[(t.index+uint(i))%P] {
+			result |= 1 << i
+		}
+	}
+	return result
+}
+
+func (t *Tausworthe) Uint16() uint16 {
+	t.next()
+	var result uint16
+	for i := 0; i < 16; i++ {
 		if t.num[(t.index+uint(i))%P] {
 			result |= 1 << i
 		}
