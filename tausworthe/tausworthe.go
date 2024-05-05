@@ -29,7 +29,7 @@ func init() {
 		tausworthe.num[i] = true
 	}
 
-	for i := 0; i < i<<22; i++ {
+	for i := 0; i < i<<23; i++ {
 		tausworthe.next()
 	}
 }

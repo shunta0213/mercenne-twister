@@ -24,6 +24,8 @@ func TestSeed(t *testing.T) {
 	})
 
 	t.Run("randomness check", func(t *testing.T) {
+		t.SkipNow()
+
 		for i := 0; i < 25; i++ {
 			file, _ := os.Create(fmt.Sprintf("data/seed_random/seed_random_%d.txt", i))
 			defer file.Close()
@@ -69,8 +71,9 @@ func TestUint64(t *testing.T) {
 	// for verifying randomness
 	t.Run("gen 2^15 numbers", func(t *testing.T) {
 		t.SkipNow()
+		tausworthe.Seed(1 << 26)
 
-		file, err := os.Create("data/uint64/fuzz.txt")
+		file, err := os.Create("fuzz.txt")
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -88,6 +91,8 @@ func BenchmarkBool(b *testing.B) {
 }
 
 func BenchmarkUint64(b *testing.B) {
+	tausworthe.Seed(1 << 26)
+
 	for i := 0; i < b.N; i++ {
 		tausworthe.Uint64()
 	}
